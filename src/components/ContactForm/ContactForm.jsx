@@ -6,8 +6,6 @@ import * as Yup from 'yup'
 import { nanoid } from 'nanoid';
 
 export default function ContactForm({ onAddContact }) {
-  const nameFieldId = useId();
-  const numberFieldId = useId();
 
   const initialValues = {
     name: '',
@@ -27,7 +25,7 @@ export default function ContactForm({ onAddContact }) {
   .required('Number is required'),
 });
 
-const handleSubmit = (values, { resetForm }) => {
+  const handleSubmit = (values, { resetForm }) => {
   const newContact = { id: nanoid(), ...values }; 
   onAddContact(newContact);
   resetForm();
@@ -39,29 +37,41 @@ const handleSubmit = (values, { resetForm }) => {
       validationSchema={validationSchema}
       onSubmit={handleSubmit}
     >
-      {() => (
+      {({ isValid, dirty }) => (
         <Form className={css.formContact}>
-          <label htmlFor="name" className={css.labelContact}>Name</label>
+          <label htmlFor="name" className={css.labelContact}>
+            Name
+          </label>
           <Field
             className={css.field}
             type="text"
             name="name"
-            id={nameFieldId}
             required
+            autoFocus
           />
-          <ErrorMessage name="name" component="div" className={css.errorMessage} />
+          <ErrorMessage
+            name="name"
+            component="div"
+            className={css.errorMessage}
+          />
 
-          <label htmlFor={numberFieldId} className={css.labelContact}>Number</label>
-          <Field
-            className={css.field}
-            type="tel"
+          <label htmlFor="number" className={css.labelContact}>
+            Number
+          </label>
+          <Field className={css.field} type="tel" name="number" required />
+          <ErrorMessage
             name="number"
-            id={numberFieldId}
-            required
+            component="div"
+            className={css.errorMessage}
           />
-          <ErrorMessage name="number" component="div" className={css.errorMessage} />
 
-          <button className={css.buttonAdd} type="submit">Add contact</button>
+          <button
+            className={css.buttonAdd}
+            type="submit"
+            disabled={!isValid || !dirty}
+          >
+            Add contact
+          </button>
         </Form>
       )}
     </Formik>
