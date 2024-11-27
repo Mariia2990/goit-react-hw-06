@@ -7,9 +7,9 @@ const Filter = () => {
   const filter = useSelector(selectNameFilter);
 
   return (
-    <div>
+    <div className={css.searchBox}>
       <label className={css.labelFilter}>
-        Find contacts by name:
+        Find contacts by name: 
         <input
           className={css.inputFilter}
           type="text"

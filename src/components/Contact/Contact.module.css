@@ -2,13 +2,14 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 408px;
+    width: 280px;
     padding: 10px;
     gap: 10px;
     margin: 10px 0 0;
     border-radius: 8px;
     background-color: aquamarine;
     transition: transform 0.3s ease;
+    font-size: 14px;
 }
 
 .itemContact:hover{
@@ -17,8 +18,8 @@
 
 .buttonDelete{
 display: flex;
-width: 100px;
-height: 40px;
+width: 80px;
+height: 35px;
 align-items: center;
 justify-content: center;
 margin-left: auto;
@@ -27,6 +28,7 @@ border-radius: 8px;
 background-color: orangered;
 color: #fff;
 border:none;
+font-size: 14px;
 }
 
 .buttonDelete:hover{
@@ -53,5 +55,17 @@ align-items: center;
 .contactInfo{
 display: flex;
 flex-direction: column;
-    /* gap: 10px; */
+}
+
+@media screen and (min-width: 768px) {
+.itemContact {
+    width: 408px;
+    font-size: 18px;
+}
+.buttonDelete {
+    width: 100px;
+    height: 40px;
+    font-size: 18px;
+}
+
 }

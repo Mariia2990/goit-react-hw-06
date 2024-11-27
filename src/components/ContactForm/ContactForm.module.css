@@ -3,22 +3,23 @@ display: flex;
 flex-direction: column;
 background-color:aquamarine;
 padding: 16px;
-width: 408px;
-height: 240px;
+width: 280px;
+height: 160px;
 border-radius: 8px;
 }
 
 .buttonAdd{
 display: flex;
-width: 130px;
-height: 40px;
+width: 100px;
+height: 35px;
 align-items: center;
 justify-content: center;
 border-radius:8px;
 margin: 0 auto;
-margin-top: auto;
 background-color:yellow;
 border: none;
+margin-top: 8px;
+font-size: 12px;
 }
 
 .buttonAdd:hover{
@@ -27,7 +28,7 @@ background-color:gold;
 
 .labelContact{
 font-weight: 400;
-font-size: 18px;
+font-size: 16px;
 line-height: 1.5;
 letter-spacing: .04em;
 color: #000;
@@ -37,14 +38,14 @@ text-align: left;
 }
 
 .field{
-    width: 360px;
+    width: 240px;
     height: 35px;
     border: 1px solid aqua;
     padding-left: 16px;
     padding-top: 8px;
     border-radius: 8px;
     transition: border-color .25s cubic-bezier(.4,0,.2,1);
-    font-size: 16px;
+    font-size: 12px;
     font-weight: 400;
     line-height: 1.5;
     letter-spacing: .04em;
@@ -63,4 +64,25 @@ color: red;
 font-size: 10px;
 text-align: left;
 margin-bottom: 4px;
+}
+
+@media screen and (min-width: 768px) {
+    .formContact{
+    width: 408px;
+    height: 240px;
+    }
+    .field {
+    width: 360px;
+    height: 35px;
+    font-size: 16px;
+        }
+    .buttonAdd {
+        width: 130px;
+        height: 40px;
+        margin-top: auto;
+    }
+        .labelContact {
+        font-size: 18px;
+        }
+
 }
