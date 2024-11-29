@@ -80,9 +80,11 @@ margin-bottom: 4px;
         width: 130px;
         height: 40px;
         margin-top: auto;
+        font-size: 16px;
+        font-weight: bold;
     }
         .labelContact {
-        font-size: 18px;
+        font-size: 16px;
         }
 
 }
