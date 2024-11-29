@@ -1,35 +1,52 @@
 import css from './ContactForm.module.css';
-// import { useState } from "react";
-import { useId } from "react";
-import { Formik, Field, Form, ErrorMessage } from "formik";
-import * as Yup from 'yup'
+import { useId } from 'react';
+import { Formik, Field, Form, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
 import { nanoid } from 'nanoid';
+import { useDispatch, useSelector } from 'react-redux';
+import { addContact, selectContacts } from '../../redux/contactsSlice';
 
-export default function ContactForm({ onAddContact }) {
+const ContactForm = () => {
+  const idName = useId();
+  const idNumber = useId();
+
+  const validationSchema = Yup.object({
+    name: Yup.string()
+      .min(3, 'Too Short!')
+      .max(50, 'Too Long!')
+      .required('Required'),
+    number: Yup.string()
+      .matches(
+        /^(\d{2,4}-?)+\d{2,4}$/,
+        'Number must be between 6 and 15 digits and can include hyphens, e.g., 123-456-7890',
+      )
+      .required('Number is required'),
+  });
 
   const initialValues = {
     name: '',
     number: '',
   };
 
-  const validationSchema = Yup.object({
-    name: Yup.string()
-    .min(3, "Too Short!")
-    .max(50, "Too Long!")
-    .required("Required"),
-  number: Yup.string()
-  .matches(
-    /^(\d{2,4}-?)+\d{2,4}$/,
-    'Number must be between 6 and 15 digits and can include hyphens, e.g., 123-456-7890'
-  )
-  .required('Number is required'),
-});
+  const dispatch = useDispatch();
+  const contacts = useSelector(selectContacts);
 
-  const handleSubmit = (values, { resetForm }) => {
-  const newContact = { id: nanoid(), ...values }; 
-  onAddContact(newContact);
-  resetForm();
-};
+  const handleSubmit = (values, actions) => {
+    if (
+      contacts.some(
+        contact =>
+          contact.name.toLowerCase().trim() === values.name.toLowerCase().trim() ||
+      contact.number === values.number,
+      )
+    ) {
+      alert(`${values.name} is already in contacts.`);
+      return;
+    }
+
+    const newContact = { ...values, id: nanoid() };
+    dispatch(addContact(newContact));
+    actions.resetForm();
+  };
 
   return (
     <Formik
@@ -39,10 +56,11 @@ export default function ContactForm({ onAddContact }) {
     >
       {({ isValid, dirty }) => (
         <Form className={css.formContact}>
-          <label htmlFor="name" className={css.labelContact}>
+          <label htmlFor={idName} className={css.labelContact}>
             Name
           </label>
           <Field
+            id={idName}
             className={css.field}
             type="text"
             name="name"
@@ -55,10 +73,16 @@ export default function ContactForm({ onAddContact }) {
             className={css.errorMessage}
           />
 
-          <label htmlFor="number" className={css.labelContact}>
+          <label htmlFor={idNumber} className={css.labelContact}>
             Number
           </label>
-          <Field className={css.field} type="tel" name="number" required />
+          <Field
+            id={idNumber}
+            className={css.field}
+            type="tel"
+            name="number"
+            required
+          />
           <ErrorMessage
             name="number"
             component="div"
@@ -76,4 +100,6 @@ export default function ContactForm({ onAddContact }) {
       )}
     </Formik>
   );
-}
+};
+
+export default ContactForm;
